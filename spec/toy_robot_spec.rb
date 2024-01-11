@@ -5,7 +5,7 @@ RSpec.describe ToyRobot do
     expect(ToyRobot::VERSION).not_to be nil
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  it "has a command line interface" do
+    expect { described_class::CLI }.not_to raise_error
   end
 end
