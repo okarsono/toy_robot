@@ -4,6 +4,11 @@ AllCops:
 Style/Documentation:
   Enabled: false
 
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: '()'
+    '%w':    '()'
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes

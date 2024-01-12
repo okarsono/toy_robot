@@ -10,7 +10,7 @@ module ToyRobot
 
     desc "play", "Starts a new ToyRobot simulation"
     def play
-      puts "Welcome. master"
+      GameService.call
     end
   end
 end
