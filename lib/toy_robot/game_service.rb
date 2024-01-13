@@ -25,7 +25,7 @@ module ToyRobot
       command = read_command
 
       until request_to_exit?(command)
-        process(command)
+        process(command) unless command.nil?
         command = read_command
       end
 
@@ -33,7 +33,10 @@ module ToyRobot
     end
 
     def process(command)
-      command.help? ? show_help : prompter.say("You entered #{command.name}")
+      return show_help if command.respond_to?(:help?) && command.help?
+
+      prompter.say("You entered #{command.name}")
+      prompter.say command.help_instructions
     end
 
     private
@@ -48,6 +51,8 @@ module ToyRobot
     end
 
     def request_to_exit?(command)
+      return false if command.nil?
+
       CommandValidator::QUIT_COMMANDS.include? command.name
     end
 
@@ -57,6 +62,9 @@ module ToyRobot
 
     def read_command
       prompter.ask question
+    rescue ToyRobot::Command::ImproperCommandError => e
+      prompter.say e.message
+      nil
     end
 
     def show_help

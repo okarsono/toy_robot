@@ -2,7 +2,7 @@
 
 module ToyRobot
   class CommandValidator
-    QUIT_COMMANDS = %w(EXIT QUIT).freeze
+    QUIT_COMMANDS = %w(QUIT).freeze
     HELP_COMMANDS = %w(HELP).freeze
 
     SIMPLE_COMMANDS = %w(
@@ -17,7 +17,7 @@ module ToyRobot
     VALID_COMMANDS = (SIMPLE_COMMANDS + COMPLEX_COMMANDS + HELP_COMMANDS + QUIT_COMMANDS).freeze
 
     def self.validate(user_input)
-      return Command.new(user_input) if (SIMPLE_COMMANDS + QUIT_COMMANDS).include? user_input
+      return Command.build(user_input) if (SIMPLE_COMMANDS + QUIT_COMMANDS).include? user_input
 
       (HELP_COMMANDS + COMPLEX_COMMANDS).map do |candidate|
         send("try_#{candidate.downcase}_command", user_input)
@@ -38,7 +38,7 @@ module ToyRobot
 
       return unless matches
 
-      Command.new(matches[0])
+      Command.build(matches[0])
     end
 
     def self.try_place_command(user_input)
@@ -48,7 +48,7 @@ module ToyRobot
       return unless matches
 
       name, x, y, face = matches
-      Command.new(name, x: x, y: y, face: face)
+      Command.build(name, x: x, y: y, face: face)
     end
   end
 end
