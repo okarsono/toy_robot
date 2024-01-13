@@ -1,0 +1,6 @@
+en:
+  prompt:
+    initial: "Welcome. This robot is at your service."
+    command_cursor: "> "
+    ending: "Thank you for playing."
+  acceptable_instructions: "Acceptable commands:\n%{commands}"
