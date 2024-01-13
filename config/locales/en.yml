@@ -10,10 +10,10 @@ en:
     left: "  LEFT - Turn -90 degrees to face a different direction"
     move: "  MOVE - Move the robot 1 step in the direction it is facing"
     place: |
-      PLACE x,y,face
+      PLACE x,y,direction
         x is the coordinate on x-axis
         y is the coordinate on y-axis
-        face is either NORTH, EAST, SOUTH, or WEST
+        direction is either NORTH, EAST, SOUTH, or WEST
     quit: "  QUIT - Quit the game"
     report: "  REPORT - Print out the robot's current coordinate and direction"
     right: "  RIGHT - Turn 90 degrees to face a different direction"

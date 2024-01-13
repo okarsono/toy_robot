@@ -2,10 +2,6 @@
 
 module ToyRobot
   module Command
-    class Help < Base
-      def help?
-        true
-      end
-    end
+    class Help < Base; end
   end
 end

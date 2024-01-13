@@ -5,7 +5,7 @@ require "i18n"
 
 module ToyRobot
   class GameService
-    attr_reader :prompter
+    attr_reader :prompter, :robot_service
 
     def self.call
       new.call
@@ -16,6 +16,7 @@ module ToyRobot
       I18n.default_locale = :en
 
       @prompter = HighLine.new
+      @robot_service = RobotService.new
     end
 
     def call
@@ -32,14 +33,16 @@ module ToyRobot
       prompter.say label(".prompt.ending")
     end
 
+    private
+
     def process(command)
       return show_help if command.respond_to?(:help?) && command.help?
+
+      return robot_service.execute(command) if command.respond_to?(:robotic?) && command.robotic?
 
       prompter.say("You entered #{command.name}")
       prompter.say command.help_instructions
     end
-
-    private
 
     def question
       string_to_command = lambda { |str|

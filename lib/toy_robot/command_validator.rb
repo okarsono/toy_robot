@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative("direction")
+
 module ToyRobot
   class CommandValidator
     QUIT_COMMANDS = %w(QUIT).freeze
@@ -47,8 +49,8 @@ module ToyRobot
 
       return unless matches
 
-      name, x, y, face = matches
-      Command.build(name, x: x, y: y, face: face)
+      name, x, y, facing = matches
+      Command.build(name, x: x.to_i, y: y.to_i, direction: ToyRobot::Direction.parse(facing))
     end
   end
 end

@@ -3,7 +3,7 @@
 module ToyRobot
   module Command
     module Robotic
-      def robot?
+      def robotic?
         true
       end
     end
