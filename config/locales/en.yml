@@ -17,3 +17,5 @@ en:
     quit: "  QUIT - Quit the game"
     report: "  REPORT - Print out the robot's current coordinate and direction"
     right: "  RIGHT - Turn 90 degrees to face a different direction"
+
+  failed_command: "Failed executing command. Reason: %{reason}"
