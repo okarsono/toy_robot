@@ -36,12 +36,11 @@ module ToyRobot
     private
 
     def process(command)
-      return show_help if command.help?
-
-      return robot_service.execute(command) if command.respond_to?(:robotic?) && command.robotic?
-
-      prompter.say("You entered #{command.name}")
-      prompter.say command.help_instructions
+      if command.robotic?
+        robot_service.execute(command)
+      else
+        prompter.say command.help_instructions
+      end
     rescue ToyRobot::Robot::InvalidRobotAttribute => e
       prompter.say label(".failed_command", reason: e.message)
     end
@@ -58,7 +57,7 @@ module ToyRobot
     def request_to_exit?(command)
       return false if command.nil?
 
-      CommandValidator::QUIT_COMMANDS.include? command.name
+      Command::QUIT_COMMANDS.include? command.name
     end
 
     def label(key, **opts)
@@ -73,7 +72,7 @@ module ToyRobot
     end
 
     def show_help
-      prompter.say label(".acceptable_instructions", commands: CommandValidator::VALID_COMMANDS.join("\n"))
+      prompter.say label(".acceptable_instructions", commands: Command::VALID_COMMANDS.join("\n"))
     end
   end
 end

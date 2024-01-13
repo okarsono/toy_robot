@@ -3,25 +3,53 @@
 require "active_support"
 require "i18n"
 
-require_relative("command/base")
-require_relative("command/help")
-require_relative("command/left")
-require_relative("command/move")
-require_relative("command/place")
-require_relative("command/report")
-require_relative("command/right")
-require_relative("command/quit")
-
 module ToyRobot
-  module Command
+  class Command
+    QUIT_COMMANDS = %w(QUIT).freeze
+    HELP_COMMANDS = %w(HELP).freeze
+
+    SIMPLE_COMMANDS = %w(
+      MOVE
+      LEFT
+      RIGHT
+      REPORT
+    ).freeze
+
+    COMPLEX_COMMANDS = %w(PLACE).freeze
+
+    ROBOTIC_COMMANDS = (SIMPLE_COMMANDS + COMPLEX_COMMANDS).freeze
+
+    VALID_COMMANDS = (ROBOTIC_COMMANDS + HELP_COMMANDS + QUIT_COMMANDS).freeze
+
     class ImproperCommandError < StandardError; end
 
-    def build(name, **opts)
-      const_get(ActiveSupport::Inflector.titleize(name)).new(name, **opts)
+    def self.build(name, **opts)
+      opts&.merge!(robotic: true) if ROBOTIC_COMMANDS.include? name
+      new(name, **opts)
     rescue NameError => e
       ToyRobot.logger.error "#{name} command is improperly configured: #{e.message}"
       raise ImproperCommandError, "#{name} command is improperly configured. Please use a different command."
     end
-    module_function :build
+
+    VALID_COMMANDS.each do |command_name|
+      define_method("#{command_name.downcase}?") do
+        command_name == @name
+      end
+
+      define_method("robotic?") do
+        ROBOTIC_COMMANDS.include? @name
+      end
+    end
+
+    attr_reader :name, :options
+
+    def initialize(name, **opts)
+      @name = name
+      @options = opts
+    end
+
+    def help_instructions
+      I18n.t(".command.#{ActiveSupport::Inflector.demodulize(self.class.name).downcase}")
+    end
   end
 end
