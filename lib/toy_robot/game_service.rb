@@ -31,6 +31,8 @@ module ToyRobot
       end
 
       prompter.say label(".prompt.ending")
+    rescue SignalException => e
+      prompter.say label(".prompt.ending")
     end
 
     private
