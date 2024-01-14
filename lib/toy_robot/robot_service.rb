@@ -8,18 +8,21 @@ module ToyRobot
       @robot = nil
     end
 
+    def execute(command)
+      return false if robot.nil? && !command.place?
+
+      if command.place?
+        initialize_robot(command.options)
+      else
+        robot.send(command.name.downcase)
+      end
+      true
+    end
+
     def initialize_robot(options)
       x, y, direction = options.slice(:x, :y, :direction).values
       @robot = Robot.new(x, y, direction)
       ToyRobot.logger.info "Robot initialized and placed on the board"
-    end
-
-    def execute(command)
-      return false if robot.nil? && !command.place?
-
-      return initialize_robot(command.options) if command.place?
-
-      puts "THIS is #{command.name}!!!!!!!!!!!!!!!!!!!!!!!!"
     end
   end
 end
