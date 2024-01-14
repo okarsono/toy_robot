@@ -36,12 +36,18 @@ module ToyRobot
     private
 
     def process(command)
-      if command.robotic?
-        robot_service.execute(command)
-      else
-        prompter.say command.help_instructions
-      end
-    rescue ToyRobot::Robot::InvalidRobotAttribute => e
+      command.robotic? ? process_robotic_command(command) : process_systemic_command(command)
+    end
+
+    def process_systemic_command(command)
+      command.help? ? show_help : prompter.say(command.help_instructions)
+    end
+
+    def process_robotic_command(command)
+      successful = robot_service.execute(command)
+      ToyRobot.logger.info(successful ? "#{command.name} executed." : "#{command.name} is ignored.")
+    rescue ToyRobot::Robot::InvalidRobotAttribute, NoMethodError => e
+      ToyRobot.logger.error "Failed executing command: #{e.message}"
       prompter.say label(".failed_command", reason: e.message)
     end
 

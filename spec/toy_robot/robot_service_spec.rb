@@ -16,7 +16,7 @@ RSpec.describe ToyRobot::RobotService do
     context "invalid robot argument" do
       let(:robot_options) { {} }
       it "throws error" do
-        expect { subject.initialize_robot(robot_options) }.to raise_error NoMethodError
+        expect { subject.initialize_robot(robot_options) }.to raise_error ToyRobot::Robot::InvalidRobotAttribute
       end
     end
   end

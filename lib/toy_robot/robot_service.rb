@@ -14,9 +14,8 @@ module ToyRobot
       if command.place?
         initialize_robot(command.options)
       else
-        robot.send(command.name.downcase)
+        robot.send(command.name.downcase, **command.options)
       end
-      true
     end
 
     def initialize_robot(options)

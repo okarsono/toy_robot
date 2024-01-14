@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "logger"
 require "toy_robot"
 
 RSpec.configure do |config|

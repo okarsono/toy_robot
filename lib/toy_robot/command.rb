@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "active_support"
 require "i18n"
 
 module ToyRobot
@@ -24,7 +23,6 @@ module ToyRobot
     class ImproperCommandError < StandardError; end
 
     def self.build(name, **opts)
-      opts&.merge!(robotic: true) if ROBOTIC_COMMANDS.include? name
       new(name, **opts)
     rescue NameError => e
       ToyRobot.logger.error "#{name} command is improperly configured: #{e.message}"
@@ -49,7 +47,7 @@ module ToyRobot
     end
 
     def help_instructions
-      I18n.t(".command.#{ActiveSupport::Inflector.demodulize(self.class.name).downcase}")
+      I18n.t(".command.#{name.downcase}")
     end
   end
 end

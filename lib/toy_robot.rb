@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "logger"
+
 require_relative "toy_robot/cli"
 require_relative "toy_robot/command"
 require_relative "toy_robot/command_validator"
