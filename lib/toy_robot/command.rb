@@ -20,13 +20,8 @@ module ToyRobot
 
     VALID_COMMANDS = (ROBOTIC_COMMANDS + HELP_COMMANDS + QUIT_COMMANDS).freeze
 
-    class ImproperCommandError < StandardError; end
-
     def self.build(name, **opts)
       new(name, **opts)
-    rescue NameError => e
-      ToyRobot.logger.error "#{name} command is improperly configured: #{e.message}"
-      raise ImproperCommandError, "#{name} command is improperly configured. Please use a different command."
     end
 
     VALID_COMMANDS.each do |command_name|
