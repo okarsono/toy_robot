@@ -60,4 +60,37 @@ RSpec.describe ToyRobot::RobotService do
       end
     end
   end
+
+  context "integrated tests" do
+    let(:humanoid) { double(trick: "magic!") }
+    let(:commands) { place_and_prior_commands + post_place_commands }
+
+    let(:place_and_prior_commands) do
+      [
+        ToyRobot::Command.new("MOVE"),
+        ToyRobot::Command.new("REPORT"),
+        ToyRobot::Command.new("PLACE", x: 0, y: 0, direction: "WEST")
+      ]
+    end
+
+    let(:post_place_commands) do
+      [
+        ToyRobot::Command.new("LEFT"),
+        ToyRobot::Command.new("RIGHT"),
+        ToyRobot::Command.new("MOVE")
+      ]
+    end
+
+    it "executes from the first valid place command onwards" do
+      allow(ToyRobot::Robot).to receive(:new) { humanoid }
+      executed_commands_iterator = post_place_commands.map { |c| c.name.downcase }.cycle
+      expect(humanoid).to receive(:send).exactly(post_place_commands.size).times do |argument|
+        expect(argument).to eq executed_commands_iterator.next
+      end
+
+      commands.each do |command|
+        subject.execute(command)
+      end
+    end
+  end
 end

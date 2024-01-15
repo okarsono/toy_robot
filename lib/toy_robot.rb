@@ -12,7 +12,7 @@ require_relative "toy_robot/version"
 
 module ToyRobot
   def self.logger
-    @logger ||= defined?(Rails) ? Rails.logger : Logger.new($stdout)
+    @logger ||= Logger.new($stdout).tap { |l| l.level = Logger::FATAL } # default to report only fatal error
   end
 
   def self.logger=(logger)
