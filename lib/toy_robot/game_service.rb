@@ -5,17 +5,17 @@ require "i18n"
 
 module ToyRobot
   class GameService
-    attr_reader :prompter, :robot_service
-
     def self.call
       new.call
     end
 
-    def initialize
+    attr_reader :prompter, :robot_service
+
+    def initialize(output: $stdout)
       I18n.load_path += Dir["#{File.expand_path("config/locales")}/*.yml"]
       I18n.default_locale = :en
 
-      @prompter = HighLine.new
+      @prompter = HighLine.new($stdin, output)
       @robot_service = RobotService.new
     end
 
@@ -31,8 +31,15 @@ module ToyRobot
       end
 
       prompter.say label(".prompt.ending")
-    rescue SignalException => e
+    rescue SignalException
       prompter.say label(".prompt.ending")
+    end
+
+    def read_command
+      prompter.ask question
+    rescue ToyRobot::Command::ImproperCommandError => e
+      prompter.say e.message
+      nil
     end
 
     private
@@ -70,13 +77,6 @@ module ToyRobot
 
     def label(key, **opts)
       I18n.t(key, **opts)
-    end
-
-    def read_command
-      prompter.ask question
-    rescue ToyRobot::Command::ImproperCommandError => e
-      prompter.say e.message
-      nil
     end
 
     def show_help
