@@ -4,7 +4,7 @@
 
 This project is created to showcase my proposed technical solution to the fun problem described in [SPECIFICATION.md](./SPECIFICATION.md).
 
-It is a CLI (command line interface) written in Ruby v3.0.6 with the help of Bundler v.24.22.
+It is a CLI (command line interface) written in Ruby v3.0.6 with the help of Bundler v.2.4.22.
 
 It contains all the elements that I would use to make this production-quality.
 
@@ -22,7 +22,7 @@ It also contains some of the technical design/concepts:
 
 # Usage
 
-There are two ways to run this CLI:
+There are three ways to run this CLI:
 
 1. Install as local gem
 
@@ -37,13 +37,19 @@ There are two ways to run this CLI:
 
     * Ruby v3.0.6 onwards
     * RVM / rbenv would be helpful
-    * Bundler v2.4.22 onwards
+    * Bundler v2 onwards
+
+3. Use `docker`
+
+    Requirement:
+
+    * docker client
 
 Before continuing, please clone the [repository](https://github.com/okarsono/toy_robot/) to your machine.
 
 ## Installation as local gem
 
-*Note: if you want to use bundle to run this CLI, please skip this section.*
+*Note: if you want to use `bundle` or `docker` to run this CLI, please skip this section.*
 
 ```bash
 cd <toy_robot_folder>
@@ -68,6 +74,25 @@ Afterwards, to run:
 
 ```bash
 bundle exec toy_robot play
+```
+
+## Using Docker
+
+```bash
+cd <toy_robot_folder>
+docker build -t toy_robot_octa .
+```
+
+And to run the docker image as a container:
+
+```bash
+docker run --name toy_robot_octa -it toy_robot_octa toy_robot play
+```
+
+To restart the container, you'll have to remove the container first before rerunning the above command:
+
+```bash
+docker remove toy_robot_octa
 ```
 
 ## Development
