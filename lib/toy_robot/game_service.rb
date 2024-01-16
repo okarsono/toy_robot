@@ -49,8 +49,9 @@ module ToyRobot
     end
 
     def process_robotic_command(command)
-      successful = robot_service.execute(command)
-      ToyRobot.logger.info(successful ? "#{command.name} executed." : "#{command.name} is ignored.")
+      result = robot_service.execute(command)
+      prompter.say result if command.report? && result
+      ToyRobot.logger.info(result ? "#{command.name} executed." : "#{command.name} is ignored.")
     rescue ToyRobot::Robot::InvalidRobotAttribute, NoMethodError => e
       ToyRobot.logger.error "Failed executing command: #{e.message}"
       prompter.say label(".failed_command", reason: e.message)

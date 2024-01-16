@@ -11,11 +11,10 @@ module ToyRobot
     def execute(command)
       return false if robot.nil? && !command.place?
 
-      if command.place?
-        initialize_robot(command.options)
-      else
-        robot.send(command.name.downcase, **command.options)
-      end
+      return initialize_robot(command.options) if command.place?
+
+      object = command.report? ? RobotPresenter.new(robot) : robot
+      object.send(command.name.downcase, **command.options)
     end
 
     def initialize_robot(options)
