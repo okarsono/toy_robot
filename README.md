@@ -109,21 +109,26 @@ Setting the value to a non-numeric value will result in the default value being 
 If you run the CLI as local gem or via `bundle exec` method, then the easiest way is to define these env variables
 when running the CLI:
 
-Local gem:
-```bash
-BOARD_WIDTH=10 BOARD_HEIGHT=10 toy_robot play
-```
 
-`bundle exec`:
-```bash
-BOARD_WIDTH=10 BOARD_HEIGHT=10 bundle exec toy_robot play
-```
+* Local gem:
 
-For docker image, you can override the value by editing `robot.env` file before running `docker run`:
+  ```bash
+  BOARD_WIDTH=10 BOARD_HEIGHT=10 toy_robot play
+  ```
 
-```bash
-docker run --env-file=robot.env --name toy_robot_octa -it toy_robot_octa toy_robot play
-```
+* `bundle exec`:
+
+   ```bash
+   BOARD_WIDTH=10 BOARD_HEIGHT=10 bundle exec toy_robot play
+   ```
+
+* docker image:
+
+   You can override the value by editing `robot.env` file before running `docker run`:
+
+   ```bash
+   docker run --env-file=robot.env --name toy_robot_octa -it toy_robot_octa toy_robot play
+   ```
 
 
 ## Development
