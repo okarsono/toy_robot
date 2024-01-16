@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "highline"
-require "i18n"
 
 module ToyRobot
   class GameService
@@ -12,9 +11,6 @@ module ToyRobot
     attr_reader :prompter, :robot_service
 
     def initialize(output: $stdout)
-      I18n.load_path += Dir["#{File.expand_path("config/locales")}/*.yml"]
-      I18n.default_locale = :en
-
       @prompter = HighLine.new($stdin, output)
       @robot_service = RobotService.new
     end

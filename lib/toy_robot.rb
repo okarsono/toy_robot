@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require "i18n"
 require "logger"
 
+require_relative "../config/initializers/i18n"
 require_relative "toy_robot/cli"
 require_relative "toy_robot/command"
 require_relative "toy_robot/command_validator"
