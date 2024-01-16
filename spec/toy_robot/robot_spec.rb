@@ -220,4 +220,57 @@ RSpec.describe ToyRobot::Robot do
       end
     end
   end
+
+  context "integration test" do
+    # starts at [2,3] facing EAST
+    let(:x_coordinate) { 2 }
+    let(:y_coordinate) { 3 }
+    let(:direction) { "EAST" }
+
+    it "executes commands correctly" do
+      # initial placement
+      expect(subject.x).to be 2
+      expect(subject.y).to be 3
+      expect(subject.direction).to eq "EAST"
+
+      # move
+      subject.move
+      expect(subject.x).to be 3
+      expect(subject.y).to be 3
+      expect(subject.direction).to eq "EAST"
+
+      # turn left
+      subject.left
+      expect(subject.x).to be 3
+      expect(subject.y).to be 3
+      expect(subject.direction).to eq "NORTH"
+
+      # move, now we're at the top edge of the board
+      subject.move
+      expect(subject.x).to be 3
+      expect(subject.y).to be 4
+      expect(subject.direction).to eq "NORTH"
+
+      # move command - this should be ignored because otherwise the robot would fall off the board
+      subject.move
+      expect(subject.x).to be 3
+      expect(subject.y).to be 4
+      expect(subject.direction).to eq "NORTH"
+
+      # turn right
+      subject.right
+      expect(subject.x).to be 3
+      expect(subject.y).to be 4
+      expect(subject.direction).to eq "EAST"
+
+      # report
+      expect(subject.report).to eq(
+        {
+          x: 3,
+          y: 4,
+          direction: "EAST"
+        }
+      )
+    end
+  end
 end
