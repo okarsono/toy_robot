@@ -4,6 +4,8 @@ require "i18n"
 
 module ToyRobot
   class Command
+    class ImproperCommandError < StandardError; end
+
     QUIT_COMMANDS = %w(QUIT).freeze
     HELP_COMMANDS = %w(HELP).freeze
 
