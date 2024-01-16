@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name = "toy_robot"
   spec.version = ToyRobot::VERSION
   spec.authors = ["Octa Karsono"]
-  spec.email = ["ocpuso@gmail.com"]
+  spec.email = ["ocpuso at gmail.com"]
 
   spec.summary = "A simple gem that moves a virtual robot"
   spec.description = "This is my solution to the challenge as set out in the SPECIFICATION.md"
@@ -36,9 +36,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "i18n", "~> 1.14"
   spec.add_dependency "thor", "~> 1.3"
 
-  spec.add_development_dependency "pry", "~> 0.14"
-  spec.add_development_dependency "pry-byebug", "~> 3.10"
-  spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "rubocop", "~> 1.21"
+  spec.metadata["rubygems_mfa_required"] = "true"
 end
