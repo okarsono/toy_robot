@@ -95,6 +95,37 @@ To restart the container, you'll have to remove the container first before rerun
 docker remove toy_robot_octa
 ```
 
+## Execution options
+
+The default size of the game board is `5x5`. This size can be configured/overridden via two environment variables:
+
+* `BOARD_WIDTH`
+* `BOARD_HEIGHT`
+
+The value of each environment variable needs to be a positive integer. Setting the value to a non-positive integer
+will result in inability to place the robot on the board.
+Setting the value to a non-numeric value will result in the default value being used (`5`)
+
+If you run the CLI as local gem or via `bundle exec` method, then the easiest way is to define these env variables
+when running the CLI:
+
+Local gem:
+```bash
+BOARD_WIDTH=10 BOARD_HEIGHT=10 toy_robot play
+```
+
+`bundle exec`:
+```bash
+BOARD_WIDTH=10 BOARD_HEIGHT=10 bundle exec toy_robot play
+```
+
+For docker image, you can override the value by editing `robot.env` file before running `docker run`:
+
+```bash
+docker run --env-file=robot.env --name toy_robot_octa -it toy_robot_octa toy_robot play
+```
+
+
 ## Development
 
 After checking out the repo, run `bundle install` to install dependencies. Then, run `bundle exec rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

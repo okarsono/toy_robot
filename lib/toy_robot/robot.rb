@@ -10,8 +10,8 @@ module ToyRobot
       @x = coord_x
       @y = coord_y
       @direction = direction
-      @x_max = (options[:board_x_length] || 5) - 1
-      @y_max = (options[:board_y_length] || 5) - 1
+      @x_max = (options[:board_x_length] || env_board_width || 5) - 1
+      @y_max = (options[:board_y_length] || env_board_height || 5) - 1
 
       validate_attributes
     end
@@ -34,6 +34,22 @@ module ToyRobot
     end
 
     private
+
+    def env_board_width
+      to_int(ENV["BOARD_WIDTH"])
+    end
+
+    def env_board_height
+      to_int(ENV["BOARD_HEIGHT"])
+    end
+
+    def to_int(value)
+      return if value.nil?
+
+      Integer(value)
+    rescue ArgumentError
+      # return nil
+    end
 
     def validate_attributes
       validate_coordinates

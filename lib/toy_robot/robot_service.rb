@@ -19,8 +19,9 @@ module ToyRobot
     end
 
     def initialize_robot(options)
-      x, y, direction = options.slice(:x, :y, :direction).values
-      @robot = Robot.new(x, y, direction)
+      required_options = %i[x y direction]
+      x, y, direction = options.slice(*required_options).values
+      @robot = Robot.new(x, y, direction, **options.except(*required_options))
       ToyRobot.logger.info "Robot initialized and placed on the board"
     end
   end
