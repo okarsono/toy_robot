@@ -29,8 +29,11 @@ module ToyRobot
     end
 
     def report
-      puts "Robot is at [#{x},#{y}] facing #{direction}"
-      true
+      {
+        x: x,
+        y: y,
+        direction: direction
+      }
     end
 
     private

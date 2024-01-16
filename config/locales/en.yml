@@ -19,3 +19,8 @@ en:
     right: "  RIGHT - Turn 90 degrees to face a different direction"
 
   failed_command: "Failed executing command. Reason: %{reason}"
+
+  robot_reporter:
+    full: "Robot is at [%{x},%{y}] facing %{direction}"
+    short: "[%{x},%{y}] facing %{direction}"
+    csv: "[%{x},%{y},%{direction}]"
