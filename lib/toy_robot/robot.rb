@@ -36,11 +36,11 @@ module ToyRobot
     private
 
     def env_board_width
-      to_int(ENV["BOARD_WIDTH"])
+      to_int(ENV.fetch("BOARD_WIDTH", nil))
     end
 
     def env_board_height
-      to_int(ENV["BOARD_HEIGHT"])
+      to_int(ENV.fetch("BOARD_HEIGHT", nil))
     end
 
     def to_int(value)

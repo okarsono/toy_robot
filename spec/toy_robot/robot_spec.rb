@@ -10,8 +10,8 @@ RSpec.describe ToyRobot::Robot do
   subject { described_class.new(x_coordinate, y_coordinate, direction, **robot_options) }
 
   describe "#new" do
-    let(:board_x_length) {}
-    let(:board_y_length) {}
+    let(:board_x_length) { nil }
+    let(:board_y_length) { nil }
 
     it "returns a new robot" do
       expect(subject).to be_a described_class
@@ -68,9 +68,9 @@ RSpec.describe ToyRobot::Robot do
         let(:robot_options) { {} }
 
         it "uses the board size specified by the environment variables" do
-          allow(ENV).to receive(:[]).and_call_original
-          allow(ENV).to receive(:[]).with("BOARD_WIDTH") { 100 }
-          allow(ENV).to receive(:[]).with("BOARD_HEIGHT") { 50 }
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with("BOARD_WIDTH", nil) { 100 }
+          allow(ENV).to receive(:fetch).with("BOARD_HEIGHT", nil) { 50 }
           expect(subject.x_max).to eq 99
           expect(subject.y_max).to eq 49
         end
@@ -86,16 +86,16 @@ RSpec.describe ToyRobot::Robot do
 
         context "from environment variables" do
           it "falls back to the default value 5 as the size if the value is not numeric" do
-            allow(ENV).to receive(:[]).and_call_original
-            allow(ENV).to receive(:[]).with("BOARD_WIDTH") { "abc" }
-            allow(ENV).to receive(:[]).with("BOARD_HEIGHT") { 9 }
+            allow(ENV).to receive(:fetch).and_call_original
+            allow(ENV).to receive(:fetch).with("BOARD_WIDTH", nil) { "abc" }
+            allow(ENV).to receive(:fetch).with("BOARD_HEIGHT", nil) { 9 }
             expect(subject.x_max).to eq 4
             expect(subject.y_max).to eq 8
           end
 
           it "throws an error if the value is not a positive number" do
-            allow(ENV).to receive(:[]).and_call_original
-            allow(ENV).to receive(:[]).with("BOARD_HEIGHT") { -3 }
+            allow(ENV).to receive(:fetch).and_call_original
+            allow(ENV).to receive(:fetch).with("BOARD_HEIGHT", nil) { -3 }
             expect { subject }.to raise_error ToyRobot::Robot::InvalidRobotAttribute
           end
         end
