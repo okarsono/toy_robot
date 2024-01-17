@@ -26,6 +26,10 @@ module ToyRobot
       new(name, **opts)
     end
 
+    def self.all
+      VALID_COMMANDS
+    end
+
     VALID_COMMANDS.each do |command_name|
       define_method("#{command_name.downcase}?") do
         command_name == @name

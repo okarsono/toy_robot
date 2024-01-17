@@ -74,10 +74,12 @@ RSpec.describe ToyRobot::CommandValidator do
     end
 
     context "with parameters not matching expected pattern" do
-      it "returns nil" do
-        expect(described_class.try_place_command("PLACE 1, 2, SOUTH")).to be_nil
-        expect(described_class.try_place_command("PLACE x,y,SOUTH")).to be_nil
-        expect(described_class.try_place_command("PLACE 0,10,UP")).to be_nil
+      it "raises error with hint to help" do
+        ["PLACE", "PLACE 1, 2, SOUTH", "PLACE IN MY HEART"].each do |command_string|
+          expect do
+            described_class.try_place_command(command_string)
+          end.to raise_error ToyRobot::Command::ImproperCommandError, "invalid PLACE command. Try HELP PLACE for help"
+        end
       end
     end
   end

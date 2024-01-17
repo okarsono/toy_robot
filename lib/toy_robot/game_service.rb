@@ -45,7 +45,7 @@ module ToyRobot
     end
 
     def process_systemic_command(command)
-      command.help? ? show_help : prompter.say(command.help_instructions)
+      command.help? ? show_help(command) : prompter.say(command.help_instructions)
     end
 
     def process_robotic_command(command)
@@ -76,8 +76,14 @@ module ToyRobot
       I18n.t(key, **opts)
     end
 
-    def show_help
-      prompter.say label(".acceptable_instructions", commands: Command::VALID_COMMANDS.join(" "))
+    def show_help(help_command = nil)
+      if help_command
+        sub_command = ToyRobot::Command.new(help_command.options[:on]) if help_command && help_command.options[:on]
+        help_message = sub_command ? sub_command.help_instructions : help_command.help_instructions
+      else
+        help_message = label(".acceptable_instructions", commands: Command.all.join(" "))
+      end
+      prompter.say help_message
     end
   end
 end

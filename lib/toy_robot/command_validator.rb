@@ -17,26 +17,29 @@ module ToyRobot
     end
 
     def self.inspect
-      Command::VALID_COMMANDS.sort.join(",")
+      Command.all.sort.join(",")
     end
 
     def self.try_help_command(user_input)
-      pattern = /^(HELP)$/
+      pattern = /^(HELP)( (#{(Command.all - Command::HELP_COMMANDS).join("|")})){0,1}$/
       matches = user_input.match(pattern)&.captures
 
       return unless matches
 
-      Command.build(matches[0])
+      options = { on: matches[2] }.compact
+      Command.build(matches[0], **options)
     end
 
     def self.try_place_command(user_input)
-      pattern = /^(PLACE) (\d+),(\d+),(NORTH|EAST|WEST|SOUTH)$/
+      return unless user_input.match(/^PLACE/)
+
+      pattern = /^(PLACE) (\d+),(\d+),(#{Direction::VALID_DIRECTIONS.join("|")})$/
       matches = user_input.match(pattern)&.captures
 
-      return unless matches
+      raise Command::ImproperCommandError, "invalid PLACE command. Try HELP PLACE for help" unless matches
 
       name, x, y, facing = matches
-      Command.build(name, x: x.to_i, y: y.to_i, direction: ToyRobot::Direction.parse(facing))
+      Command.build(name, x: x.to_i, y: y.to_i, direction: Direction.parse(facing))
     end
   end
 end

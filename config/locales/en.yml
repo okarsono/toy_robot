@@ -8,7 +8,7 @@ en:
   acceptable_instructions: "Acceptable commands: %{commands}"
 
   command:
-    help: "  HELP - Show available commands"
+    help: "  HELP <COMMAND> - Show available help on a particular command"
     left: "  LEFT - Turn -90 degrees to face a different direction"
     move: "  MOVE - Move the robot 1 step in the direction it is facing"
     place: |
