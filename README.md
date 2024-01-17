@@ -13,10 +13,12 @@ It also contains some of the technical design/concepts:
 * object-oriented programming
 * separation of concerns
 * CI/CD
-* automated tests
+* automated tests (unit and integration)
 * MVC pattern
 * error handling
 * logging
+* documentation
+* localization
 * use of existing gems that's thriving instead of reinventing the wheel
 
 
@@ -97,6 +99,7 @@ docker remove toy_robot_octa
 
 ## Execution options
 
+### Size of the game board
 The default size of the game board is `5x5`. This size can be configured/overridden via two environment variables:
 
 * `BOARD_WIDTH`
@@ -130,6 +133,20 @@ when running the CLI:
    docker run --env-file=robot.env --name toy_robot_octa -it toy_robot_octa toy_robot play
    ```
 
+### Input stream
+
+By default, the CLI will read input/commands from `STDIN`. This behaviour can be modified so that it reads from a text file
+by adding `--in=input.txt` option to the `toy_robot play` command.
+
+You can also find this information by running `toy_robot help play`.
+
+**Note:**
+
+The input file must be a simple text file, one command on its own line. See [sample input file](sample_input.txt).
+
+## Valid Game Commands
+
+Valid Toy Robot commands can be found in the [SPECIFICATION.md](./SPECIFICATION.md). I also added `HELP` and `QUIT` commands.
 
 ## Development
 

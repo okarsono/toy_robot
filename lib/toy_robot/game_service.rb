@@ -4,14 +4,14 @@ require "highline"
 
 module ToyRobot
   class GameService
-    def self.call
-      new.call
+    def self.call(**kwargs)
+      new(**kwargs).call
     end
 
     attr_reader :prompter, :robot_service
 
-    def initialize(output: $stdout)
-      @prompter = HighLine.new($stdin, output)
+    def initialize(input: $stdin, output: $stdout)
+      @prompter = HighLine.new(input, output)
       @robot_service = RobotService.new
     end
 
@@ -77,7 +77,7 @@ module ToyRobot
     end
 
     def show_help
-      prompter.say label(".acceptable_instructions", commands: Command::VALID_COMMANDS.join("\n"))
+      prompter.say label(".acceptable_instructions", commands: Command::VALID_COMMANDS.join(" "))
     end
   end
 end

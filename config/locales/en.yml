@@ -1,9 +1,11 @@
 en:
+  play_options:
+    input: "Read commands from input file. If not provided, defaults to STDIN"
   prompt:
     initial: "Welcome. This robot is at your service."
     command_cursor: "> "
     ending: "Thank you for playing."
-  acceptable_instructions: "Acceptable commands:\n%{commands}"
+  acceptable_instructions: "Acceptable commands: %{commands}"
 
   command:
     help: "  HELP - Show available commands"
